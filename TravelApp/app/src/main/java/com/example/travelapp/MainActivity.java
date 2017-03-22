@@ -3,6 +3,9 @@ package com.example.travelapp;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -40,6 +43,10 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Start the fragment loaded on the home fragment
+        switchFragment(new HomeFragment());
+
     }
 
     @Override
@@ -74,15 +81,20 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    //When a nav item is selected, load the corresponding fragment
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_browse) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            switchFragment(new BrowseFragment());
+        } else if(id == R.id.nav_home) {
+            switchFragment(new HomeFragment());
+
+        } else if (id == R.id.nav_upload) {
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -97,5 +109,18 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //Loads the corresponding fragment
+    //Creates the fragment manager and fragment transcation
+    //Replace the fragContainer with the current fragment
+    //Add the fragment string to the stack (allows user to use back button on phone to go back)
+    //Commit the fragment transcation
+    public void switchFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragContainer, fragment, fragment.toString());
+        fragmentTransaction.addToBackStack(fragment.toString());
+        fragmentTransaction.commit();
     }
 }
