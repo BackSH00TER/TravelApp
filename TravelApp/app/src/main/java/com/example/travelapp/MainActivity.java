@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity
             switchFragment(new HomeFragment());
 
         } else if (id == R.id.nav_upload) {
+            switchFragment(new UploadFragment());
 
         } else if (id == R.id.nav_slideshow) {
 
