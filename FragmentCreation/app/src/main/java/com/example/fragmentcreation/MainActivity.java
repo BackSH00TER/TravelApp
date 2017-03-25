@@ -18,10 +18,8 @@ public class MainActivity extends FragmentActivity {
 
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragContainer, new SampleFragment());
-
         fragmentTransaction.commit();
     }
 

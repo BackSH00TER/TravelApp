@@ -12,7 +12,7 @@
         android:layout_marginTop="17dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/uploadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView4"
