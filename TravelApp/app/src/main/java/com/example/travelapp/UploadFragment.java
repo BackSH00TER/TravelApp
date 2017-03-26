@@ -60,9 +60,17 @@ public class UploadFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Initialize the Amazon Cognito credentials provider
-        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+        /*CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
                 getActivity().getApplicationContext(),
                 "us-west-2:e01653c7-9aee-4237-bc20-50ede0c85edc", // Identity Pool ID
+                Regions.US_WEST_2 // Region
+        );*/
+        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+                getActivity().getApplicationContext(),
+                "268293220984", //acountId
+                "us-west-2:e01653c7-9aee-4237-bc20-50ede0c85edc", // Identity Pool ID
+                "arn:aws:iam::268293220984:role/Cognito_ProjectGeckoUnauth_Role", //unauth role
+                "arn:aws:iam::268293220984:role/Cognito_ProjectGeckoAuth_Role", //auth role
                 Regions.US_WEST_2 // Region
         );
         AmazonS3Client s3Client = new AmazonS3Client(credentialsProvider);
@@ -72,8 +80,13 @@ public class UploadFragment extends Fragment {
             String imagePath = selectedImage.getPath();
 
             //TODO: Fix the uplaod, crashes at this point (permissions issue?)
-            PutObjectRequest por = new PutObjectRequest("hilde2", "TestPictureFromPhone", new java.io.File(imagePath));
-            s3Client.putObject(por);
+            try {
+                PutObjectRequest por = new PutObjectRequest("hilde2", "TestPictureFromPhone", new java.io.File(imagePath));
+                s3Client.putObject(por);
+            }
+            catch (Exception ex) {
+                System.out.println("Exception: " + ex.getMessage());
+            }
         }
     }
 }
