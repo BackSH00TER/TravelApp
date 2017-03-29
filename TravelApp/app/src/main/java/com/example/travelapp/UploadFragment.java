@@ -81,9 +81,9 @@ public class UploadFragment extends Fragment {
 
         if(resultCode == RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
-            String path = getRealPathFromURI(selectedImage);
+            //String path = getRealPathFromURI(selectedImage);
 
-            uploadImage(path);
+            uploadImage(selectedImage);
         }
     }
 
@@ -137,7 +137,7 @@ public class UploadFragment extends Fragment {
         return result;
     }
 
-    public void uploadImage(String path) {
+    public void uploadImage(Uri imageUri) {
         CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
                 getActivity().getApplicationContext(),
                 "268293220984", //acountId
@@ -148,14 +148,20 @@ public class UploadFragment extends Fragment {
         );
         AmazonS3Client s3Client = new AmazonS3Client(credentialsProvider);
 
-        try {
-            enableStrictMode(); //TODO BAD BAD REMOVE
-            PutObjectRequest por = new PutObjectRequest("hilde2", "TestPictureFromPhone", new java.io.File(path));
-            s3Client.putObject(por);
-        }
-        catch (Exception ex) {
-            System.out.println("Exception: " + ex.getMessage());
-        }
+        // Synchronous upload
+//        try {
+//            enableStrictMode(); //TODO BAD BAD REMOVE
+//            PutObjectRequest por = new PutObjectRequest("hilde2", "TestPictureFromPhone", new java.io.File(path));
+//            s3Client.putObject(por);
+//        }
+//        catch (Exception ex) {
+//            System.out.println("Exception: " + ex.getMessage());
+//        }
+
+        // Async upload
+        new S3PutObjectTask(s3Client, this.getContext()).execute(imageUri);
+
+
     }
     //VERY BAD WORKAROUND ONLY KEEP FOR TESTING, GET THE RIGHT WAY TO DO IT
     //TODO IMPLEMENT REAL WAY REMOVE THIS ITS BAD
