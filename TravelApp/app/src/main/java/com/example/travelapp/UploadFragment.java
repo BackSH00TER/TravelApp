@@ -103,22 +103,11 @@ public class UploadFragment extends Fragment {
         }
     }
 
-    private String getPath(Uri uri ) {
-        Context context = getContext();
-        String result = null;
-        String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = context.getContentResolver( ).query( uri, proj, null, null, null );
-        if(cursor != null){
-            if ( cursor.moveToFirst( ) ) {
-                int column_index = cursor.getColumnIndexOrThrow( proj[0] );
-                result = cursor.getString( column_index );
-            }
-            cursor.close( );
-        }
-        if(result == null) {
-            result = "Not found";
-        }
-        return result;
+    public void uploadImage(Uri imageUri) {
+
+        // Async upload
+        new S3PutObjectTask(this.getContext()).execute(imageUri);
+
     }
 
     // And to convert the image URI to the direct file system path of the image file
@@ -136,73 +125,4 @@ public class UploadFragment extends Fragment {
         cursor.close();
         return result;
     }
-
-    public void uploadImage(Uri imageUri) {
-        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
-                getActivity().getApplicationContext(),
-                "268293220984", //acountId
-                "us-west-2:e01653c7-9aee-4237-bc20-50ede0c85edc", // Identity Pool ID
-                "arn:aws:iam::268293220984:role/Cognito_ProjectGeckoUnauth_Role", //unauth role
-                "arn:aws:iam::268293220984:role/Cognito_ProjectGeckoAuth_Role", //auth role
-                Regions.US_WEST_2 // Region
-        );
-        AmazonS3Client s3Client = new AmazonS3Client(credentialsProvider);
-
-        // Synchronous upload
-//        try {
-//            enableStrictMode(); //TODO BAD BAD REMOVE
-//            PutObjectRequest por = new PutObjectRequest("hilde2", "TestPictureFromPhone", new java.io.File(path));
-//            s3Client.putObject(por);
-//        }
-//        catch (Exception ex) {
-//            System.out.println("Exception: " + ex.getMessage());
-//        }
-
-        // Async upload
-        new S3PutObjectTask(s3Client, this.getContext()).execute(imageUri);
-
-
-    }
-    //VERY BAD WORKAROUND ONLY KEEP FOR TESTING, GET THE RIGHT WAY TO DO IT
-    //TODO IMPLEMENT REAL WAY REMOVE THIS ITS BAD
-    //http://simpledeveloper.com/network-on-main-thread-error-solution/  (Example)
-    //NEED TO IMPLEMENT ASYNC
-    public void enableStrictMode()
-    {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
-        StrictMode.setThreadPolicy(policy);
-    }
-
-    //old code to see other ways to upload, remove if not needed
-    private void oldUploadImage() {
-        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
-                getActivity().getApplicationContext(),
-                "268293220984", //acountId
-                "us-west-2:e01653c7-9aee-4237-bc20-50ede0c85edc", // Identity Pool ID
-                "arn:aws:iam::268293220984:role/Cognito_ProjectGeckoUnauth_Role", //unauth role
-                "arn:aws:iam::268293220984:role/Cognito_ProjectGeckoAuth_Role", //auth role
-                Regions.US_WEST_2 // Region
-        );
-        AmazonS3Client s3Client = new AmazonS3Client(credentialsProvider);
-
-
-        //OTHER CODE FOR uploading , remove if we dont need this anymore
-        /*try {
-            PutObjectRequest por = new PutObjectRequest("hilde2", "TestPictureFromPhone", new java.io.File(imagePath));
-            s3Client.putObject(por);
-        }
-        catch (Exception ex) {
-            System.out.println("Exception: " + ex.getMessage());
-        }*/
-//
-//        try {
-//            TransferUtility transferUtility = new TransferUtility(s3Client, getContext());
-//            TransferObserver observer = transferUtility.upload("hilde2", "TestPictureFromPhone", new java.io.File(imagePath));
-//        }
-//        catch (Exception ex) {
-//            System.out.println("Exception: " + ex.getMessage());
-//        }
-    }
-
 }

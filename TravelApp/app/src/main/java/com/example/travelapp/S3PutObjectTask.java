@@ -42,8 +42,9 @@ public class S3PutObjectTask extends AsyncTask<Uri, Integer, S3PutObjectTask.S3T
     private Context activityContext; // getting the context from the calling activity
 
     // Constructor, need to have some things passed in
-    public S3PutObjectTask(AmazonS3Client s3, Context context) {
-        this.s3Client = s3;
+    public S3PutObjectTask(Context context) {
+        Master m = (Master)context.getApplicationContext();
+        this.s3Client = m.getS3Client();
         this.activityContext = context;
     }
 
