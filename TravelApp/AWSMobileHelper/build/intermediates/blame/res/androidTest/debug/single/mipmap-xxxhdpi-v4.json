@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\TravelApp\\TravelApp\\AWSMobileHelper\\build\\intermediates\\res\\merged\\androidTest\\debug\\mipmap-xxxhdpi-v4\\button_facebook_pressed.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\TravelApp\\TravelApp\\AWSMobileHelper\\build\\intermediates\\bundles\\debug\\res\\mipmap-xxxhdpi-v4\\button_facebook_pressed.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\TravelApp\\TravelApp\\AWSMobileHelper\\build\\intermediates\\res\\merged\\androidTest\\debug\\mipmap-xxxhdpi-v4\\button_login_pressed.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\TravelApp\\TravelApp\\AWSMobileHelper\\build\\intermediates\\bundles\\debug\\res\\mipmap-xxxhdpi-v4\\button_login_pressed.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\TravelApp\\TravelApp\\AWSMobileHelper\\build\\intermediates\\res\\merged\\androidTest\\debug\\mipmap-xxxhdpi-v4\\button_facebook.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\TravelApp\\TravelApp\\AWSMobileHelper\\build\\intermediates\\bundles\\debug\\res\\mipmap-xxxhdpi-v4\\button_facebook.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidStudioProjects\\TravelApp\\TravelApp\\AWSMobileHelper\\build\\intermediates\\res\\merged\\androidTest\\debug\\mipmap-xxxhdpi-v4\\button_login.png",
+        "source": "D:\\Android\\AndroidStudioProjects\\TravelApp\\TravelApp\\AWSMobileHelper\\build\\intermediates\\bundles\\debug\\res\\mipmap-xxxhdpi-v4\\button_login.png"
+    }
+]
